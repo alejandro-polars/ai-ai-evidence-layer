@@ -1,0 +1,62 @@
+}{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EvidenceLayerOutput",
+  "type": "object",
+  "required": ["trace_id", "violations", "extracted_facts", "confidence"],
+  "additionalProperties": false,
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "description": "ID de la traza de trading analizada"
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "severity", "evidence_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "enum": [
+              "DAILY_LOSS_LIMIT",
+              "MAX_DRAWDOWN",
+              "CONSISTENCY_RULE",
+              "NEWS_TRADING",
+              "WEEKEND_HOLDING",
+              "POSITION_SIZE_LIMIT",
+              "MARTINGALE_PATTERN"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "breach"]
+          },
+          "evidence_ref": {
+            "type": "string",
+            "description": "Referencia a la línea/timestamp del input que soporta la violación"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "extracted_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_drawdown_pct": { "type": ["number", "null"] },
+        "daily_loss_pct": { "type": ["number", "null"] },
+        "largest_win_ratio": { "type": ["number", "null"] },
+        "trades_during_news": { "type": "integer", "minimum": 0 },
+        "weekend_positions": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+
