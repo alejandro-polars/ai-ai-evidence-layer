@@ -1,0 +1,45 @@
+model:
+  base_model: "Qwen/Qwen2.5-7B-Instruct"
+  max_seq_length: 4096
+  load_in_4bit: true
+  dtype: null  # auto
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  bias: "none"
+  use_gradient_checkpointing: "unsloth"
+
+training:
+  output_dir: "./checkpoints/qwen25-7b-evidence"
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  warmup_steps: 20
+  num_train_epochs: 3
+  learning_rate: 2.0e-4
+  lr_scheduler_type: "cosine"
+  optim: "adamw_8bit"
+  weight_decay: 0.01
+  fp16: false
+  bf16: true
+  logging_steps: 10
+  save_steps: 200
+  eval_steps: 200
+  save_total_limit: 3
+  seed: 42
+  report_to: "none"
+
+dataset:
+  train_path: "data/train.jsonl"
+  val_path: "data/val.jsonl"
+  schema_path: "data/schema.json"
+  system_prompt_path: "deployment/system_prompt.md"
