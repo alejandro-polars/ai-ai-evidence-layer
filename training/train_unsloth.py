@@ -106,7 +106,6 @@ def main():
         processing_class=tokenizer,
         train_dataset=train_ds,
         eval_dataset=val_ds,
-        max_seq_length=cfg["model"]["max_seq_length"],
         args=training_args,
     )
 
