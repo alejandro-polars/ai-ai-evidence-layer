@@ -219,7 +219,7 @@ def main():
     # Repite/mezcla hasta llenar
     full = []
     while len(full) < n_total:
-        full.append(rng.choice(pool)())
+        full.append(rng.choice(pool))
     rng.shuffle(full)
 
     Path("data").mkdir(exist_ok=True)
