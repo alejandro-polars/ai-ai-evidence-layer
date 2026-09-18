@@ -50,7 +50,6 @@ def main():
 
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=cfg["model"]["base_model"],
-        max_seq_length=cfg["model"]["max_seq_length"],
         dtype=cfg["model"]["dtype"],
         load_in_4bit=cfg["model"]["load_in_4bit"],
     )
