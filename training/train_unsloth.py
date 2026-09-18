@@ -1,3 +1,5 @@
+
+
 import json
 import yaml
 from pathlib import Path
@@ -50,6 +52,7 @@ def main():
 
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=cfg["model"]["base_model"],
+        max_seq_length=cfg["model"]["max_seq_length"],
         dtype=cfg["model"]["dtype"],
         load_in_4bit=cfg["model"]["load_in_4bit"],
     )
@@ -65,7 +68,6 @@ def main():
         random_state=cfg["training"]["seed"],
     )
 
-    # Asegura que el chat template de Qwen2.5 está disponible
     if tokenizer.chat_template is None:
         raise RuntimeError("Tokenizer sin chat_template. Verifica el modelo base.")
 
@@ -100,6 +102,7 @@ def main():
         report_to=cfg["training"]["report_to"],
     )
 
+    # Configuración limpia y minimalista compatible con TRL moderno
     trainer = SFTTrainer(
         model=model,
         processing_class=tokenizer,
