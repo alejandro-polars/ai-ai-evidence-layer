@@ -1,5 +1,5 @@
-
-
+import os
+os.environ["VLLM_USE_V1"] = "0"
 import json
 import yaml
 from pathlib import Path
